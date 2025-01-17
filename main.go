@@ -28,7 +28,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	processImage := mod.ExportedFunction("processImage")
+	processData := mod.ExportedFunction("processData")
 	printMemUsage := mod.ExportedFunction("printMemUsage")
 
 	_, err = printMemUsage.Call(ctx)
@@ -40,12 +40,12 @@ func main() {
 
 	for i := range 10 {
 		fmt.Println("STEP:", i+1)
-		step(ctx, mod, processImage, printMemUsage)
+		step(ctx, mod, processData, printMemUsage)
 	}
 }
 
-func step(ctx context.Context, mod api.Module, processImage, printMemUsage api.Function) {
-	_, err := processImage.Call(ctx)
+func step(ctx context.Context, mod api.Module, processData, printMemUsage api.Function) {
+	_, err := processData.Call(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}

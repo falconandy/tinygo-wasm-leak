@@ -1,25 +1,16 @@
 package main
 
 import (
-	"bytes"
 	_ "embed"
 	"fmt"
-	"image/png"
 	"runtime"
 )
 
-//go:embed test-image.png
-var testImageData []byte
-
-//go:wasmexport processImage
-func processImage() {
-	img, err := png.Decode(bytes.NewReader(testImageData))
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-
-	fmt.Printf("Decoded image: width=%d height=%d\n", img.Bounds().Dx(), img.Bounds().Dy())
+//go:wasmexport processData
+func processData() {
+	N := 1 * 1024 * 1024
+	data := make([]byte, N)
+	fmt.Println(len(data))
 }
 
 //go:wasmexport printMemUsage
