@@ -31,6 +31,13 @@ func main() {
 	processImage := mod.ExportedFunction("processImage")
 	printMemUsage := mod.ExportedFunction("printMemUsage")
 
+	_, err = printMemUsage.Call(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("mod.Memory().Size():", bToMb(mod.Memory().Size()), "MiB")
+
 	for i := range 10 {
 		fmt.Println("STEP:", i+1)
 		step(ctx, mod, processImage, printMemUsage)
@@ -49,7 +56,6 @@ func step(ctx context.Context, mod api.Module, processImage, printMemUsage api.F
 	}
 
 	fmt.Println("mod.Memory().Size():", bToMb(mod.Memory().Size()), "MiB")
-
 }
 
 func bToMb(b uint32) uint32 {
